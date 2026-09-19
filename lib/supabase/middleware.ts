@@ -1,15 +1,16 @@
 import { createServerClient } from "@supabase/ssr";
+import type { User } from "@supabase/supabase-js";
 import { NextResponse, type NextRequest } from "next/server";
 
 import { publicEnv } from "@/lib/env";
 import type { Database } from "@/types/database";
 
 /**
- * Refreshes the Supabase session cookie on every matched request.
+ * Refreshes the Supabase session cookie on every matched request and reports
+ * who the request belongs to.
  *
- * Route protection is deliberately NOT here yet. Phase 2 adds it once real
- * authentication exists; adding redirect logic now would be guarding routes
- * that nobody can reach.
+ * Returns the user rather than deciding anything with it: the redirect policy
+ * lives in `proxy.ts`, so this module stays about sessions and cookies.
  */
 export async function updateSession(request: NextRequest) {
   let response = NextResponse.next({ request });
@@ -43,12 +44,16 @@ export async function updateSession(request: NextRequest) {
   // results page, neither of which needs authentication at all. Failing to
   // refresh degrades a visitor to logged-out; failing open degrades the whole
   // site (§34).
+  let user: User | null = null;
   try {
-    await supabase.auth.getUser();
+    const { data } = await supabase.auth.getUser();
+    user = data.user;
   } catch {
-    // Intentionally swallowed. Route protection is enforced per-route from
-    // Phase 2 onward, so a stale session here cannot grant access.
+    // Intentionally swallowed, leaving `user` null. A visitor is treated as
+    // signed out and redirected to /login rather than the whole site
+    // returning 500. Protected pages re-check the session themselves, so
+    // this cannot grant access to anyone.
   }
 
-  return response;
+  return { response, user };
 }
