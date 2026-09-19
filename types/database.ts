@@ -22,9 +22,16 @@ export type Database = {
     Tables: {
       users: {
         Row: UserRow;
-        Insert: Omit<UserRow, "created_at" | "updated_at"> &
-          Partial<Pick<UserRow, "created_at" | "updated_at">>;
+        // Nullable columns are optional on insert, matching the database:
+        // display_name and avatar_url have no NOT NULL constraint.
+        Insert: Pick<UserRow, "id" | "github_id" | "github_username"> &
+          Partial<Omit<UserRow, "id" | "github_id" | "github_username">>;
         Update: Partial<UserRow>;
+        // Required by postgrest-js's GenericTable constraint. Without it the
+        // table does not satisfy the constraint and every query's row type
+        // silently collapses to `never` — which reads like a schema bug rather
+        // than a missing field. `supabase gen types` emits this too.
+        Relationships: [];
       };
     };
     Views: Record<never, never>;
