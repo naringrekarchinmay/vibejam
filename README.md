@@ -93,6 +93,14 @@ Phase 1 runs with none of the three credentials — placeholders are enough.
 ## Local installation
 
 ```bash
+git clone https://github.com/naringrekarchinmay/vibejam.git
+```
+
+```bash
+cd vibejam
+```
+
+```bash
 nvm use
 ```
 
@@ -259,6 +267,8 @@ Deliberately not built yet.
   evaluation, visual comparison, GitHub App integration.
 
 ## Project documents
+
+Repository: [naringrekarchinmay/vibejam](https://github.com/naringrekarchinmay/vibejam) (public)
 
 | File | Purpose |
 | --- | --- |

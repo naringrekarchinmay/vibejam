@@ -15,8 +15,7 @@ references below (§) point into it.
 - [x] `git init` on `main`
 - [x] `.nvmrc` pinned to the Node version in use (26.3.1)
 - [x] Initial commit
-- [ ] Create the GitHub remote — **deferred**, needs a name and a
-      public/private decision from the project owner. Not required until deploy.
+- [x] Create the GitHub remote — [naringrekarchinmay/vibejam](https://github.com/naringrekarchinmay/vibejam), **public**
 
 ## Phase 1 — Foundation ✅
 

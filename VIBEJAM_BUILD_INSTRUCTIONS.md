@@ -1770,7 +1770,8 @@ Must complete before Phase 1. These are environment facts, not code.
       only this document. Run `git init`, set `user.name` / `user.email`, and make an
       initial commit containing this file before writing any application code.
 - [ ] Confirm the Node version and record it in `.nvmrc`.
-- [ ] Create the GitHub remote (optional for Phase 1, required before deploy).
+- [x] Create the GitHub remote — done after Phase 1:
+      `https://github.com/naringrekarchinmay/vibejam` (public).
 
 Acceptance criteria:
 
@@ -2361,9 +2362,15 @@ command is red.
 
 # 44. Git Workflow
 
-> **Corrected.** The original text assumed the repository already existed. As of this
-> audit it does not, and `git` is additionally blocked by the unaccepted Xcode
-> license. Both are handled in **Phase 0**, which must complete first.
+> **Corrected, then resolved.** The original text assumed the repository already
+> existed. At audit time it did not, and `git` was additionally blocked by an
+> unaccepted Xcode license. Both were handled in **Phase 0**. The remote now
+> exists and is public:
+> `https://github.com/naringrekarchinmay/vibejam`.
+>
+> Because the repository is **public**, treat every commit as published the
+> moment it is pushed. Nothing secret may enter a tracked file — see §25 and
+> §29.
 
 Once Phase 0 is done, work inside that repository.
 
