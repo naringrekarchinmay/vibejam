@@ -744,19 +744,19 @@ Append this block **after** whatever shadcn wrote, so it wins. §24 calls for ch
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.185 0 0);
   --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.62 0.19 285);
-  --primary-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.82 0.21 130);
+  --primary-foreground: oklch(0.145 0 0);
   --secondary: oklch(0.24 0 0);
   --secondary-foreground: oklch(0.985 0 0);
   --muted: oklch(0.24 0 0);
   --muted-foreground: oklch(0.68 0 0);
-  --accent: oklch(0.62 0.19 285);
-  --accent-foreground: oklch(0.985 0 0);
+  --accent: oklch(0.78 0.16 70);
+  --accent-foreground: oklch(0.145 0 0);
   --destructive: oklch(0.58 0.21 27);
   --destructive-foreground: oklch(0.985 0 0);
   --border: oklch(0.26 0 0);
   --input: oklch(0.26 0 0);
-  --ring: oklch(0.62 0.19 285);
+  --ring: oklch(0.82 0.21 130);
   --radius: 0.5rem;
 }
 
@@ -772,7 +772,13 @@ body {
 }
 ```
 
-`--primary` and `--accent` are the same restrained violet. One accent, used sparingly (§24).
+**Two accents, chosen by the project owner on 2026-09-19** (§24 as amended):
+`--primary` is lime and carries CTAs, the countdown and the leaderboard;
+`--accent` is amber and carries awards and badges.
+
+Both are light, so their foreground is **dark** (`oklch(0.145 0 0)`), not white —
+white text on lime is unreadable. Verify this in Step 5 rather than trusting it.
+`--destructive` stays red and is reserved for genuine failure states (§34).
 
 - [ ] **Step 4: Force dark mode in `app/layout.tsx`**
 

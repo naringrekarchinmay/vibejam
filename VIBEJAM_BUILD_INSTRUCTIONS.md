@@ -1445,13 +1445,37 @@ Avoid a generic enterprise dashboard appearance.
 - modern clean typography
 - high contrast
 - subtle borders
-- restrained accent color
+- two accent colors, used sparingly — see "Accent colors" below
 - monospace accents for code-related information
 - large countdown timer
 - participant avatars
 - strong leaderboard presentation
 - simple animations
 - responsive layout
+
+## Accent colors
+
+> **Decision — 2026-09-19, Phase 1 Task 4.** This section originally called for a
+> single "restrained accent color". The project owner chose a two-accent scheme.
+> Recorded here because the spec is authoritative and a later reader would
+> otherwise see the implementation contradicting it.
+
+| Token | Color | oklch | Used for |
+|---|---|---|---|
+| `--primary` | Lime | `0.82 0.21 130` | Primary CTAs, the countdown timer, the leaderboard leader row and score bar, focus rings |
+| `--accent` | Amber | `0.78 0.16 70` | Awards, category badges, secondary highlights |
+
+Rules:
+
+- Both are light (L ≈ 0.8), so solid fills built on them **must** use dark
+  foreground text (`oklch(0.145 0 0)`), never white. A white-on-lime button is
+  unreadable.
+- `--destructive` stays red and is never used decoratively. With a warm accent
+  palette it is the only signal that distinguishes a failed judging run (§34)
+  from a winning score, so it must not be spent on anything else.
+- Two accents is the ceiling, not a starting point. Everything else stays
+  charcoal, border, and muted-foreground. "Used sparingly" (§48: avoid
+  unnecessary complexity) still governs.
 
 ## Brand
 
