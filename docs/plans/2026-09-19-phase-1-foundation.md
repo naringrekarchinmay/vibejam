@@ -96,7 +96,47 @@ paragraph, not with `mkdir`.
 
 ---
 
-## Task 1: Scaffold the Next.js application and quality tooling
+## Task 1: Scaffold the Next.js application and quality tooling — ✅ DONE (commit `3e75ab9`)
+
+> **What actually happened.** Four deviations from the steps below. They are
+> recorded here rather than rewritten into the steps, because the steps are what
+> was attempted and the deviations are what a future reader needs to know.
+>
+> 1. **Steps 1–3 did not work.** `create-next-app` derives the npm package name
+>    from the target directory, and `VibeJam` contains capitals, which npm
+>    rejects outright (`name can no longer contain capital letters`). Moving the
+>    conflicting files aside was necessary but not sufficient. What worked:
+>    scaffold into `.phase1-tmp/scaffold/vibejam` with `--skip-install`, move the
+>    contents up into the repository root, then `npm install` in place. Moving
+>    before installing avoids relocating `node_modules`.
+> 2. **Step 5's verification was wrong.** `git check-ignore -v` exits 0 whenever
+>    *any* pattern matches — including a negation — so it cannot distinguish
+>    ignored from un-ignored. Use `git check-ignore -q <path>` (exit 1 = not
+>    ignored) and confirm with `git add -n <path>`.
+> 3. **Vitest was installed in this task, not Task 2.** Step 10 sets
+>    `"test": "vitest run"`, so deferring the binary to Task 2 would have
+>    committed a package.json whose script could not run. Installing it also
+>    surfaced a conflict: Vitest 5 requires `@types/node` `^22 || >=24` and the
+>    scaffold pins `^20`. Fixed by bumping to `^26` to match the Node runtime —
+>    **not** with `--legacy-peer-deps`, which would have left a broken
+>    resolution in the lockfile.
+> 4. **`typecheck` needed `next typegen`.** The scaffolded `app/layout.tsx` uses
+>    `LayoutProps<"/">`, a global type Next generates into `.next/types`. Bare
+>    `tsc --noEmit` fails on a clean checkout while `next build` passes, because
+>    build generates the types first. The script is
+>    `next typegen && tsc --noEmit`.
+>
+> Also decided here: **`*.md` is excluded from Prettier.** Its first run repadded
+> every table in the spec and the plan and rewrote `*emphasis*` as `_emphasis_`.
+> Nothing was lost, but it churns the authoritative reference document and would
+> bury real amendments in cosmetic noise.
+>
+> **Gates at commit (clean `.next`):** lint 0 · typecheck 0 · test 0 · build 0 ·
+> format:check 0.
+>
+> Note: the shell here is **zsh**, so `$PIPESTATUS` is empty — use `$pipestatus`
+> or capture `$?` directly. Several gate runs silently reported no exit code
+> before this was spotted.
 
 **Files:**
 - Create: `package.json`, `tsconfig.json`, `next.config.ts`, `postcss.config.mjs`, `eslint.config.mjs`, `next-env.d.ts`, `app/layout.tsx`, `app/page.tsx`, `app/globals.css`, `public/*`, `AGENTS.md`, `CLAUDE.md`
@@ -288,11 +328,14 @@ Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>"
 
 ```bash
 cd /Users/chinmaynaringrekar/Projects/VibeJam
-npm install -D vitest @vitejs/plugin-react vite-tsconfig-paths jsdom \
+npm install -D @vitejs/plugin-react vite-tsconfig-paths jsdom \
   @testing-library/react @testing-library/jest-dom @testing-library/user-event \
   @playwright/test
 npx playwright install chromium
 ```
+
+`vitest` and the `@types/node@^26` bump it requires were already installed in
+Task 1 — do not reinstall them.
 
 `vite-tsconfig-paths` is what makes the `@/*` alias resolve inside Vitest; without it every `@/lib/...` import in a test fails to resolve.
 
