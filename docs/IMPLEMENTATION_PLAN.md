@@ -39,8 +39,8 @@ Plan: [`docs/plans/2026-09-19-phase-1-foundation.md`](plans/2026-09-19-phase-1-f
 - [x] Migration structure + `0001_init_users.sql`
 - [x] Landing page: hero, product loop, judged-result panel
 - [x] README + this plan
-- [ ] Code review
-- [ ] Phase 1 completion report
+- [x] Code review (5 findings; 3 fixed, 2 deferred with owners below)
+- [x] Phase 1 completion report
 
 **Carried into Phase 2 as known debt:**
 
@@ -49,6 +49,11 @@ Plan: [`docs/plans/2026-09-19-phase-1-foundation.md`](plans/2026-09-19-phase-1-f
 - `/login` does not exist; both landing CTAs 404.
 - Reduced motion verified structurally, not at runtime.
 - Amber is invisible below the `sm` breakpoint.
+- **Code review finding (low):** `types/database.ts` Insert requires explicit
+  `null` for the nullable `display_name` / `avatar_url`. Disappears when Phase 2
+  regenerates the file — do not hand-patch it.
+- **Code review finding (medium):** no RLS policy lets a user read a
+  co-participant's row. Owned by Phase 5, flagged there.
 
 ---
 
@@ -58,7 +63,11 @@ Acceptance: *User can sign in with GitHub and reach their dashboard.*
 
 - [ ] Create a real Supabase project; fill `.env.local`
 - [ ] Apply `0001_init_users.sql` (`supabase db reset`) — **verifies Phase 1 debt**
-- [ ] Regenerate `types/database.ts` from the live schema
+- [ ] Regenerate `types/database.ts` from the live schema — also clears the
+      Insert-type finding from the Phase 1 review
+- [ ] Verify the `handle_new_user` trigger fires on metadata change, not just
+      insert: sign in, change the GitHub display name, sign in again, confirm
+      `public.users` reflects it
 - [ ] GitHub OAuth app; credentials into the Supabase dashboard (§29)
 - [ ] `/login` page
 - [ ] OAuth callback route
@@ -105,6 +114,11 @@ Acceptance: *Three different users can join the same Jam in `waiting`; a repeat 
 - [ ] Join action
 - [ ] Participant list
 - [ ] Duplicate-join prevention at the database, not the application
+- [ ] **RLS: co-participants can read each other's public profile fields.**
+      Carried from the Phase 1 code review. Without it the participant list and
+      the Phase 11 leaderboard silently render one row — RLS filters rather than
+      errors, so it will look like a data bug. Needs `jam_participants`, which is
+      why it could not be written in Phase 1.
 
 ## Phase 6 — Competition Mode
 

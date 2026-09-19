@@ -36,7 +36,19 @@ export async function updateSession(request: NextRequest) {
   );
 
   // Touching getUser() is what triggers the token refresh. Do not remove.
-  await supabase.auth.getUser();
+  //
+  // It must not be allowed to throw. This runs on nearly every request, so an
+  // unguarded rejection during a Supabase outage or a misconfigured URL would
+  // return 500 for every route — including the landing page and the public
+  // results page, neither of which needs authentication at all. Failing to
+  // refresh degrades a visitor to logged-out; failing open degrades the whole
+  // site (§34).
+  try {
+    await supabase.auth.getUser();
+  } catch {
+    // Intentionally swallowed. Route protection is enforced per-route from
+    // Phase 2 onward, so a stale session here cannot grant access.
+  }
 
   return response;
 }

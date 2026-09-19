@@ -66,8 +66,16 @@ begin
 end;
 $$;
 
+-- Fires on insert AND on metadata change, not insert alone. Insert-only would
+-- make the ON CONFLICT branch above unreachable and freeze the profile at its
+-- first-login values: a user who renames their GitHub account or changes their
+-- avatar would show a stale name on the participant list and leaderboard
+-- forever.
+--
+-- Scoped to raw_user_meta_data so ordinary sign-in churn (last_sign_in_at and
+-- friends) does not trigger a pointless upsert on every login.
 create trigger on_auth_user_created
-  after insert on auth.users
+  after insert or update of raw_user_meta_data on auth.users
   for each row
   execute function public.handle_new_user();
 

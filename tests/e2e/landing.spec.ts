@@ -11,9 +11,10 @@ test("landing page shows the brand, the pitch, and both CTAs", async ({ page }) 
 
 test("landing page lists the seven-step product loop", async ({ page }) => {
   await page.goto("/");
-  await expect(page.getByRole("list", { name: "" }).first()).toBeVisible();
-  await expect(page.getByText("Create a Jam")).toBeVisible();
-  await expect(page.getByText("Compare results")).toBeVisible();
+  const loop = page.getByRole("region", { name: "How a Jam works" });
+  await expect(loop.getByRole("listitem")).toHaveCount(7);
+  await expect(loop.getByText("Create a Jam")).toBeVisible();
+  await expect(loop.getByText("Compare results")).toBeVisible();
 });
 
 test("landing page shows a judged result with its evidence", async ({ page }) => {
