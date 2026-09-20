@@ -1,0 +1,311 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-20T00:00:00.000Z",
+  "title": "Design System: VibeJam",
+  "extensions": {
+    "colorMeta": {
+      "scoreboard-lime": {
+        "role": "primary",
+        "displayName": "Scoreboard Lime",
+        "canonical": "oklch(0.82 0.21 130)",
+        "tonalRamp": [
+          "#001300",
+          "#003300",
+          "#165600",
+          "#397a00",
+          "#599c00",
+          "#77bc00",
+          "#95dd27",
+          "#b8ff59"
+        ]
+      },
+      "award-amber": {
+        "role": "secondary",
+        "displayName": "Award Amber",
+        "canonical": "oklch(0.78 0.16 70)",
+        "tonalRamp": [
+          "#2d0000",
+          "#520000",
+          "#772b00",
+          "#9d4f00",
+          "#c17000",
+          "#e38f00",
+          "#ffaf38",
+          "#ffd363"
+        ]
+      },
+      "failure-red": {
+        "role": "tertiary",
+        "displayName": "Failure Red",
+        "canonical": "oklch(0.704 0.191 22.216)",
+        "tonalRamp": [
+          "#2b0000",
+          "#500004",
+          "#75181c",
+          "#993c3d",
+          "#bd5a5c",
+          "#de777b",
+          "#ff6467",
+          "#ffb3b4"
+        ]
+      },
+      "background": {
+        "role": "neutral",
+        "displayName": "Field Black",
+        "canonical": "oklch(0.145 0 0)",
+        "tonalRamp": [
+          "#0a0a0a",
+          "#131313",
+          "#1f1f1f",
+          "#242424",
+          "#424242",
+          "#696969",
+          "#989898",
+          "#fafafa"
+        ]
+      },
+      "surface-card": {
+        "role": "neutral",
+        "displayName": "Raised Charcoal",
+        "canonical": "oklch(0.185 0 0)",
+        "tonalRamp": ["#0a0a0a", "#131313", "#1f1f1f", "#242424"]
+      },
+      "surface-muted": {
+        "role": "neutral",
+        "displayName": "Inset Charcoal",
+        "canonical": "oklch(0.24 0 0)",
+        "tonalRamp": ["#131313", "#1f1f1f", "#242424", "#424242"]
+      },
+      "border-hairline": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "oklch(0.26 0 0)",
+        "tonalRamp": ["#1f1f1f", "#242424", "#424242"]
+      },
+      "text-muted": {
+        "role": "neutral",
+        "displayName": "Dimmed Text",
+        "canonical": "oklch(0.68 0 0)",
+        "tonalRamp": ["#424242", "#696969", "#989898", "#c4c4c4"]
+      },
+      "foreground": {
+        "role": "neutral",
+        "displayName": "Full Text",
+        "canonical": "oklch(0.985 0 0)",
+        "tonalRamp": ["#989898", "#c4c4c4", "#fafafa"]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Hero headlines only. One per page. Archivo at 112% width, 700 weight — the scoreboard voice."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Page titles on inner screens: sign-in, dashboard, failure states."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Panel headers, participant names, the leaderboard leader row."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Prose, capped near 58ch. Leading is 1.625 because light-on-dark reads lighter and needs the room."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Captions, figure notes, supporting metadata. Never uppercase-tracked above a heading."
+      },
+      "numeric": {
+        "displayName": "Numeric",
+        "purpose": "Every score, rank, countdown, commit SHA and file path. Tabular figures, always."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "ease-out-quart",
+        "value": "cubic-bezier(0.22, 1, 0.36, 1)",
+        "purpose": "The only easing in the system. Arrives fast and settles; no bounce, no elastic."
+      },
+      {
+        "name": "rise",
+        "value": "620ms cubic-bezier(0.22, 1, 0.36, 1) backwards",
+        "purpose": "Entrance for stacked content. `backwards` fill means the natural state is the final state, so a headless renderer still produces a complete page."
+      },
+      {
+        "name": "draw",
+        "value": "900ms cubic-bezier(0.22, 1, 0.36, 1) backwards",
+        "purpose": "Score bars scaling from left origin. Paired with a count-up on the numeral."
+      },
+      {
+        "name": "count-up",
+        "value": "1100ms ease-out-quart",
+        "purpose": "Score numerals counting from zero. The true value is server-rendered, so the number is correct before, during and after."
+      }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" }
+    ],
+    "zIndex": [
+      { "name": "dropdown", "value": 10 },
+      { "name": "sticky", "value": 20 },
+      { "name": "modal-backdrop", "value": 30 },
+      { "name": "modal", "value": 40 },
+      { "name": "toast", "value": 50 },
+      { "name": "tooltip", "value": 60 }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The single most important action on a screen. One per viewport.",
+      "html": "<button class=\"ds-btn-primary\">Start a Jam</button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; height: 2.25rem; padding: 0 0.625rem; border: 1px solid transparent; border-radius: 0.5rem; background: var(--primary, oklch(0.82 0.21 130)); color: var(--primary-foreground, oklch(0.145 0 0)); font-family: Archivo, ui-sans-serif, system-ui, sans-serif; font-size: 0.875rem; font-weight: 500; cursor: pointer; transition: background 200ms cubic-bezier(0.22, 1, 0.36, 1), transform 120ms ease-out; } .ds-btn-primary:hover { background: color-mix(in oklab, var(--primary, oklch(0.82 0.21 130)) 80%, transparent); } .ds-btn-primary:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--background, oklch(0.145 0 0)), 0 0 0 5px color-mix(in oklab, var(--ring, oklch(0.82 0.21 130)) 50%, transparent); } .ds-btn-primary:active { transform: translateY(1px); }"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Secondary action, including 'Sign in with GitHub'. Hairline border, no fill at rest.",
+      "html": "<button class=\"ds-btn-outline\">Sign in with GitHub</button>",
+      "css": ".ds-btn-outline { display: inline-flex; align-items: center; justify-content: center; height: 2.25rem; padding: 0 0.625rem; border: 1px solid var(--border, oklch(0.26 0 0)); border-radius: 0.5rem; background: transparent; color: var(--foreground, oklch(0.985 0 0)); font-family: Archivo, ui-sans-serif, system-ui, sans-serif; font-size: 0.875rem; font-weight: 500; cursor: pointer; transition: background 200ms cubic-bezier(0.22, 1, 0.36, 1); } .ds-btn-outline:hover { background: var(--muted, oklch(0.24 0 0)); } .ds-btn-outline:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--background, oklch(0.145 0 0)), 0 0 0 5px color-mix(in oklab, var(--ring, oklch(0.82 0.21 130)) 50%, transparent); }"
+    },
+    {
+      "name": "Award Chip",
+      "kind": "chip",
+      "refersTo": "badge-award",
+      "description": "Marks an earned award. Static — it labels an outcome and is never a control.",
+      "html": "<span class=\"ds-chip-award\">Best UI</span>",
+      "css": ".ds-chip-award { display: inline-block; padding: 0.125rem 0.5rem; border: 1px solid color-mix(in oklab, var(--highlight, oklch(0.78 0.16 70)) 45%, transparent); border-radius: 9999px; background: color-mix(in oklab, var(--highlight, oklch(0.78 0.16 70)) 10%, transparent); color: var(--highlight, oklch(0.78 0.16 70)); font-family: Archivo, ui-sans-serif, system-ui, sans-serif; font-size: 0.6875rem; line-height: 1.4; }"
+    },
+    {
+      "name": "Panel",
+      "kind": "card",
+      "refersTo": "panel",
+      "description": "A flat surface one tonal step above the page. No shadow, ever.",
+      "html": "<div class=\"ds-panel\"><div class=\"ds-panel-head\"><span class=\"ds-panel-id\">VIBEJAM #001</span><span class=\"ds-panel-title\">Decision Engine</span></div><div class=\"ds-panel-body\">Flat surface, hairline edge, one tonal step above the field.</div></div>",
+      "css": ".ds-panel { border: 1px solid var(--border, oklch(0.26 0 0)); border-radius: 0.7rem; background: var(--card, oklch(0.185 0 0)); color: var(--foreground, oklch(0.985 0 0)); overflow: hidden; font-family: Archivo, ui-sans-serif, system-ui, sans-serif; } .ds-panel-head { display: flex; align-items: baseline; gap: 0.75rem; padding: 0.875rem 1.25rem; border-bottom: 1px solid var(--border, oklch(0.26 0 0)); } .ds-panel-id { font-family: 'Geist Mono', ui-monospace, monospace; font-size: 0.75rem; color: var(--muted-foreground, oklch(0.68 0 0)); } .ds-panel-title { font-size: 0.875rem; font-weight: 500; } .ds-panel-body { padding: 1.25rem; font-size: 0.875rem; color: var(--muted-foreground, oklch(0.68 0 0)); }"
+    },
+    {
+      "name": "Leaderboard Row",
+      "kind": "custom",
+      "refersTo": "leaderboard-row-leader",
+      "description": "The signature component. The leader is marked by lime plus weight and position — never by color alone, and never by dimming the others.",
+      "html": "<ol class=\"ds-board\"><li class=\"ds-row ds-row-leader\"><span class=\"ds-rank\">01</span><span class=\"ds-who\"><span class=\"ds-avatar\"></span>Chinmay</span><span class=\"ds-track\"><span class=\"ds-fill\" style=\"width:88%\"></span></span><span class=\"ds-score\">88</span></li><li class=\"ds-row\"><span class=\"ds-rank\">02</span><span class=\"ds-who\"><span class=\"ds-avatar\"></span>Alex</span><span class=\"ds-track\"><span class=\"ds-fill ds-fill-quiet\" style=\"width:84%\"></span></span><span class=\"ds-score\">84</span></li></ol>",
+      "css": ".ds-board { list-style: none; margin: 0; padding: 0; border: 1px solid var(--border, oklch(0.26 0 0)); border-radius: 0.7rem; background: var(--card, oklch(0.185 0 0)); overflow: hidden; font-family: Archivo, ui-sans-serif, system-ui, sans-serif; } .ds-row { display: grid; grid-template-columns: 1.75rem 1fr minmax(0, 13rem) auto; align-items: center; gap: 1rem; padding: 1rem 1.25rem; color: var(--foreground, oklch(0.985 0 0)); } .ds-row + .ds-row { border-top: 1px solid var(--border, oklch(0.26 0 0)); } .ds-rank { font-family: 'Geist Mono', ui-monospace, monospace; font-variant-numeric: tabular-nums; font-size: 0.875rem; color: var(--muted-foreground, oklch(0.68 0 0)); } .ds-row-leader .ds-rank { color: var(--primary, oklch(0.82 0.21 130)); } .ds-who { display: flex; align-items: center; gap: 0.75rem; font-size: 0.875rem; } .ds-row-leader .ds-who { font-weight: 500; } .ds-avatar { width: 1.5rem; height: 1.5rem; border-radius: 50%; background: var(--muted, oklch(0.24 0 0)); flex: none; } .ds-row-leader .ds-avatar { background: var(--primary, oklch(0.82 0.21 130)); } .ds-track { height: 0.25rem; border-radius: 9999px; background: var(--muted, oklch(0.24 0 0)); overflow: hidden; } .ds-fill { display: block; height: 100%; border-radius: 9999px; background: var(--primary, oklch(0.82 0.21 130)); } .ds-fill-quiet { background: color-mix(in oklab, var(--muted-foreground, oklch(0.68 0 0)) 50%, transparent); } .ds-score { font-family: 'Geist Mono', ui-monospace, monospace; font-variant-numeric: tabular-nums; font-size: 1.125rem; text-align: right; } .ds-row-leader .ds-score { color: var(--primary, oklch(0.82 0.21 130)); }"
+    },
+    {
+      "name": "Evidence Row",
+      "kind": "custom",
+      "refersTo": "panel",
+      "description": "A requirement verdict with the file that earned it. Status carries an icon and a word, never color alone.",
+      "html": "<div class=\"ds-evidence\"><div class=\"ds-verdict\"><span class=\"ds-pass\"><svg viewBox=\"0 0 16 16\" width=\"14\" height=\"14\" fill=\"none\" aria-hidden=\"true\"><path d=\"M3.5 8.5l3 3 6-6\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>PASS</span><span class=\"ds-req\">Persist previous comparisons</span></div><p class=\"ds-reason\">Completed comparisons are written to browser storage and rehydrated on load.</p><p class=\"ds-file\">src/lib/storage.ts</p></div>",
+      "css": ".ds-evidence { padding: 1rem 1.25rem; border-top: 1px solid var(--border, oklch(0.26 0 0)); background: color-mix(in oklab, var(--background, oklch(0.145 0 0)) 40%, transparent); font-family: Archivo, ui-sans-serif, system-ui, sans-serif; } .ds-verdict { display: flex; flex-wrap: wrap; align-items: center; gap: 0.625rem; } .ds-pass { display: inline-flex; align-items: center; gap: 0.375rem; color: var(--primary, oklch(0.82 0.21 130)); font-size: 0.75rem; font-weight: 500; } .ds-req { font-size: 0.875rem; color: var(--foreground, oklch(0.985 0 0)); } .ds-reason { margin: 0.5rem 0 0; font-size: 0.875rem; color: var(--muted-foreground, oklch(0.68 0 0)); } .ds-file { margin: 0.5rem 0 0; font-family: 'Geist Mono', ui-monospace, monospace; font-size: 0.75rem; color: var(--muted-foreground, oklch(0.68 0 0)); }"
+    },
+    {
+      "name": "Sequence Rail",
+      "kind": "nav",
+      "refersTo": "panel",
+      "description": "The product loop rendered as a flow, not a card grid. Mono numbers punch through a hairline rule.",
+      "html": "<ol class=\"ds-rail\"><li class=\"ds-step\"><span class=\"ds-rule\"></span><span class=\"ds-num\">01</span><span class=\"ds-step-label\">Create a Jam</span></li><li class=\"ds-step\"><span class=\"ds-rule\"></span><span class=\"ds-num\">02</span><span class=\"ds-step-label\">Generate a challenge</span></li></ol>",
+      "css": ".ds-rail { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.75rem 1.5rem; font-family: Archivo, ui-sans-serif, system-ui, sans-serif; } .ds-step { position: relative; padding-top: 1.5rem; } .ds-rule { position: absolute; top: 7px; left: 0; right: 0; height: 1px; background: var(--border, oklch(0.26 0 0)); } .ds-num { position: absolute; top: 0; left: 0; padding-right: 0.5rem; background: var(--background, oklch(0.145 0 0)); font-family: 'Geist Mono', ui-monospace, monospace; font-variant-numeric: tabular-nums; font-size: 0.6875rem; line-height: 15px; color: var(--muted-foreground, oklch(0.68 0 0)); } .ds-step-label { display: block; font-size: 0.875rem; color: var(--foreground, oklch(0.985 0 0)); }"
+    },
+    {
+      "name": "Wordmark Lockup",
+      "kind": "nav",
+      "refersTo": "panel",
+      "description": "The whole navigation. A wordmark, with the tagline beside it in mono on the landing page only.",
+      "html": "<header class=\"ds-lockup\"><span class=\"ds-mark\">VibeJam</span><span class=\"ds-tagline\">Build. Compete. Ship.</span></header>",
+      "css": ".ds-lockup { display: flex; align-items: baseline; gap: 0.75rem; font-family: Archivo, ui-sans-serif, system-ui, sans-serif; } .ds-mark { font-weight: 700; font-stretch: 112%; letter-spacing: -0.02em; font-size: 1.125rem; color: var(--foreground, oklch(0.985 0 0)); } .ds-tagline { font-family: 'Geist Mono', ui-monospace, monospace; font-size: 0.75rem; color: var(--muted-foreground, oklch(0.68 0 0)); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Lit Scoreboard",
+    "overview": "A scoreboard in a dark room. Almost everything recedes into near-black, and one lime figure carries the live number — the countdown, the leading score, the single action worth taking. The accent is not decoration layered onto the interface; it is the signal, and its scarcity is what makes it readable at a glance from across the room.\n\nThe system is built for two opposite moods in the same product. Coordinating a Jam is impatient and brief: answer the question, get out of the way. Building inside one is long and tense, with VibeJam sitting in a background tab where only two facts matter — how long is left, and whether anyone has submitted. Density serves the first; a single dominant lit element serves the second.\n\nTechnical detail is treated as interesting rather than as something to hide. Commit SHAs, file paths and rubric arithmetic are set in monospace and shown plainly, because that specificity is what makes an AI-generated score feel trustworthy instead of arbitrary. This system explicitly rejects the generic enterprise dashboard, hackathon-platform cruft, badge-spam gamification, SaaS landing clichés, and any leaderboard treatment that humiliates last place.",
+    "keyCharacteristics": [
+      "Dark by default and dark only — there is no light theme in the MVP",
+      "Flat surfaces, zero shadows; depth comes from four tonal steps and a hairline",
+      "One accent doing real work, plus one strictly bounded secondary",
+      "Monospace with tabular figures wherever numbers are compared",
+      "Wide, heavy display type that reads as an instrument, not a brand flourish",
+      "Motion that enhances an already-complete page and never gates content"
+    ],
+    "rules": [
+      {
+        "name": "The One Signal Rule",
+        "body": "Scoreboard Lime appears on at most one meaningful element per viewport. Two lime things on screen means neither is the signal. If a second element wants emphasis, it gets weight, size or position — not the accent.",
+        "section": "colors"
+      },
+      {
+        "name": "The Amber Boundary Rule",
+        "body": "Award Amber marks honours and never actions. It is forbidden on any button, link, focus ring, or score. A reviewer who sees amber on a control should reject the change.",
+        "section": "colors"
+      },
+      {
+        "name": "The Reserved Red Rule",
+        "body": "Failure Red is never used decoratively, never for emphasis, and never for a 'hot' score. With two warm accents already in play, red is the only thing distinguishing a failed judging run from a winning one, and spending it elsewhere destroys that distinction.",
+        "section": "colors"
+      },
+      {
+        "name": "The Dark-Foreground Rule",
+        "body": "Both accents sit near lightness 0.8. Any solid fill built on them takes Field Black text, never white. A white-on-lime button is a defect, not a style choice.",
+        "section": "colors"
+      },
+      {
+        "name": "The Tabular Figures Rule",
+        "body": "Any number compared against another number is set in Geist Mono with tabular-nums. Proportional digits make a leaderboard visibly wobble as scores animate, and a wobbling scoreboard reads as unreliable.",
+        "section": "typography"
+      },
+      {
+        "name": "The No Eyebrow Rule",
+        "body": "Small uppercase letter-spaced labels above section headings are forbidden. The pattern is the single most saturated AI-generated tell, and this project carried two of them before they were removed. The tagline appears exactly once, in the wordmark lockup, as brand rather than as a label.",
+        "section": "typography"
+      },
+      {
+        "name": "The Numbered Sequence Rule",
+        "body": "Numbered markers (01, 02) are permitted only where the order is itself the information — the seven-step product loop qualifies. Numbering sections because landing pages do that is scaffolding, not voice.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat Field Rule",
+        "body": "Surfaces never lift. If an element needs to separate from its background, it steps one tonal level or gains a hairline — never a shadow, and never a glow.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Smudge Test",
+        "body": "If a surface looks like it is floating above the page rather than cut into it, the treatment is wrong. Remove it and step the lightness instead.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do keep Scoreboard Lime to one meaningful element per viewport. Its rarity is what makes it legible.",
+      "Do set every comparable number in Geist Mono with tabular-nums.",
+      "Do give focus rings a 2px offset when they sit on an accent-filled control.",
+      "Do use dark text (oklch(0.145 0 0)) on any lime or amber fill.",
+      "Do carry status in an icon and a word as well as a color — PASS and FAIL must survive red-green color blindness, which the lime-versus-red pairing otherwise defeats.",
+      "Do step lightness to create depth, and verify contrast per pairing rather than assuming it.",
+      "Do write animations so the element's natural state is its final state, using backwards fill. A headless renderer or a hidden tab must still produce a complete page.",
+      "Do keep body measure near 58ch and leading at 1.625 for light-on-dark."
+    ],
+    "donts": [
+      "Don't put Award Amber on a button, link, focus ring, or score.",
+      "Don't put a brand color in --accent. That token is shadcn's neutral hover surface; a brand color there turns every dropdown and menu item bright amber.",
+      "Don't spend Failure Red on emphasis or decoration. It is the only signal separating a failed judging run from a winning score.",
+      "Don't add a box-shadow. Anywhere.",
+      "Don't put a small uppercase letter-spaced label above a section heading.",
+      "Don't number sections that are not sequences.",
+      "Don't build a generic enterprise dashboard — card grid, sidebar, muted blue-grey, every surface equally weighted.",
+      "Don't reach for badge-spam gamification: streaks, confetti, XP bars, achievement toasts. Awards here are earned from rubric evidence.",
+      "Don't import SaaS landing clichés — the hero-metric template, the identical three-card feature grid, the testimonial wall.",
+      "Don't render last place in red, greyed out, or shrunk. Leaderboards that humiliate are an explicit anti-reference.",
+      "Don't add a light theme. Dark is the only theme in the MVP.",
+      "Don't gate content visibility on a class-triggered transition.",
+      "Don't use a full-row progress bar where values must be compared."
+    ]
+  }
+}
