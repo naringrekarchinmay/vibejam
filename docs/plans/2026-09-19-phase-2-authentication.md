@@ -827,15 +827,34 @@ cd /Users/chinmaynaringrekar/Projects/VibeJam
 npm run lint; npm run typecheck; npm test; npm run build; npm run test:e2e; npm run format:check
 ```
 
-- [ ] **Step 4: Security review**
+- [x] **Step 4: Security review** — done 2026-09-20, after Tasks 1-5. **No findings.**
 
-```bash
-/security-review
-```
+Note: `/security-review` reviews the diff against `origin/HEAD`, which was unset
+on the freshly created repo (now fixed with `git remote set-head origin -a`).
+With everything pushed the diff is empty, so the audit below was run
+deliberately over the auth surface instead.
 
-Pay attention to: the open-redirect guard, whether any route reads user data
-without re-checking the session, and whether the service-role client has leaked
-into a request path.
+What was checked and what it showed:
+
+| Check | Result |
+| --- | --- |
+| Service-role client reachable from a request path | Never called; only defined |
+| `safeNextPath` applied at every attacker-controlled entry | All three: login page, sign-in action, callback |
+| `getSession()` used anywhere in place of `getUser()` | No. Only `getUser()`, which validates against the auth server rather than trusting the cookie |
+| Profile read relies on RLS alone | No — also scoped with `.eq("id", user.id)`, so a policy regression does not immediately leak |
+| Error screens leak internals | No. The failure page states what is known and does not guess a cause |
+
+One hypothesis was tested and **rejected**: the callback builds its redirect from
+`request.nextUrl.origin`, which in principle derives from the Host header, so
+Host injection could have redirected a freshly signed-in user off-origin.
+Spoofing both `Host:` and `X-Forwarded-Host:` against the running server left
+the redirect at `localhost:3000`. Not reproducible, so not changed — and
+deliberately still using `origin` rather than the configured app URL, because
+pinning the canonical origin would break redirects on Vercel preview
+deployments.
+
+Re-run this review after Task 6, when a real session exists: the checks above
+all ran against the signed-out paths.
 
 - [ ] **Step 5: Code review**, then the §47 report with all six sections and the
       pasted verification output.
