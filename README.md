@@ -131,7 +131,7 @@ must parse.
 | `NEXT_PUBLIC_APP_URL` | public | Phase 1 | Deployed origin in production |
 | `SUPABASE_SERVICE_ROLE_KEY` | **server only** | Phase 9 | Bypasses RLS. Judging pipeline only |
 | `GITHUB_TOKEN` | **server only** | Phase 8 | PAT, public repo read scope |
-| `OPENAI_API_KEY` | **server only** | Phase 5 | Never sent to the browser |
+| `OPENAI_API_KEY` | **server only** | Phase 4 | Never sent to the browser |
 
 Server variables are validated lazily, inside `getServerEnv()`, so a missing
 secret fails at the point of use rather than breaking the build. Validation
@@ -175,7 +175,7 @@ token needed to read a private repo, so by judging time it is gone.
 
 ## OpenAI setup
 
-Needed from **Phase 5**. Set `OPENAI_API_KEY`. All calls are server-side.
+Needed from **Phase 4** (Challenge Generator). Set `OPENAI_API_KEY`. All calls are server-side.
 
 ## Database migrations
 
